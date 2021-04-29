@@ -29,7 +29,7 @@ function _createModal(options) {
     const modal = document.createElement('div');
     modal.classList.add('win-modal');
     modal.insertAdjacentHTML('afterbegin', `
-        <div class="modal-overlay" data-close="true">
+        <div class="modal-overlay" data-close="">
             <div class="modal-window" style="width: ${options.width || DEFAULT_WIDTH}">
                 <div class="modal-header">
                     <span class="modal-title">
@@ -57,12 +57,20 @@ $.modal = function(options) {
 
     const modal = { // объект в котором хранятся все методы
         open() {
+            // фиксит баг появления на секунду модального окна (добавляет атрибут data-close="true" в .modal-overlay)
+            const attr = document.querySelector('.modal-overlay');
+            attr.setAttribute('data-close', true);
+            // ----
             if (destroyed) {
                 return console.log('Modal is destroyed');
             }
             !closing && $modal.classList.add('open');
         },
         close() {
+            // фиксит баг появления на секунду модального окна (удаляет атрибут data-close="true" из .modal-overlay)
+            const attr = document.querySelector('.modal-overlay');
+            attr.removeAttribute('data-close');
+            // ----
             closing = true;
             $modal.classList.remove('open')
             $modal.classList.add('hide');
