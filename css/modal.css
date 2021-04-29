@@ -8,8 +8,8 @@
 
 .win-modal.hide .modal-overlay,
 .win-modal.hide .modal-window {
-    opacity: 1;
-    z-index: 1000;
+    opacity: 0;
+    z-index: -1000;
 }
 
 .win-modal.open .modal-window {
